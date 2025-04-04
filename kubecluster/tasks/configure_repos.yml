@@ -1,0 +1,22 @@
+---
+- name: Create Kubernetes Repo file
+  ansible.builtin.copy:
+    dest: /etc/yum.repos.d/kubernetes.repo
+    content: |
+             [kubernetes]
+             name=Kubernetes
+             baseurl=https://pkgs.k8s.io/core:/stable:/v1.32/rpm/
+             enabled=1
+             gpgcheck=1
+             gpgkey=https://pkgs.k8s.io/core:/stable:/v1.32/rpm/repodata/repomd.xml.key
+
+- name: Create Docker-CE Repo file
+  ansible.builtin.uri:
+    url:  https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: DNF Cache refresh
+  ansible.builtin.shell: yum clean all && yum makecache

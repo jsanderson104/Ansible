@@ -1,0 +1,36 @@
+---
+# tasks file for kubecluster
+#
+
+- name: Import REPO config
+  when: v_configurerepos is True
+  ansible.builtin.import_tasks: configure_repos.yml
+    
+
+- name: Import Install Packages
+  when: v_installpackages is True
+  ansible.builtin.import_tasks: install_packages.yml
+    
+
+- name: Import Configure Firewalld tasks
+  when: v_configurefirewalld is True
+  ansible.builtin.import_tasks: configure_firewalld.yml
+    
+
+- name: Import Configure Kernel Params and IPv4 settings
+  when: v_configurekernelparams is True
+  ansible.builtin.import_tasks: configure_kernel_params.yml
+    
+
+- name: Import Disable SWAP task
+  when: v_disableswap is True
+  ansible.builtin.import_tasks: disable_swap.yml
+
+- name: Import Reboot task
+  when: v_reboot is True
+  ansible.builtin.import_tasks: reboot.yml
+
+- name: Import Kube Cluster initialization tasks
+  when: v_initk8s is True
+  ansible.builtin.import_tasks: init_k8s.yml
+
