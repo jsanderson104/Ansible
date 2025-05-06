@@ -18,5 +18,10 @@
     group: root
     mode: 0644
 
+- name: Disable SSL verification because I'm lazy and dont care.
+  ansible.builtin.lineinfile:
+    path: /etc/yum.conf
+    line: sslverify=0
+
 - name: DNF Cache refresh
   ansible.builtin.shell: yum clean all && yum makecache
