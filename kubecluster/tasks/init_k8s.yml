@@ -11,7 +11,6 @@
 - name: Configure containerd
   ansible.builtin.shell: containerd config default > /etc/containerd/config.toml
   register: config_containerd
-  failed_when: config_containerd.rc == 0
 
 - name: Enable Systemd Cgroups for containerd
   ansible.builtin.replace:
