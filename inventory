@@ -1,13 +1,17 @@
-[all]
-control
-worker1
-worker2
+[kubecluster]
+control.k8s.sanderson.com	ansible_host=192.168.1.76
+worker1.k8s.sanderson.com	ansible_host=192.168.1.169
+worker2.k8s.sanderson.com	ansible_host=192.168.1.170
+worker3.k8s.sanderson.com	ansible_host=192.168.1.171
 
 
 [master]
-control
+control.k8s.sanderson.com
 
 [workers]
-worker1
-worker2
-worker3
+worker[1:3].k8s.sanderson.com
+
+
+[ubuntu-cloud]
+ubuntu.lab	ansible_host=34.31.12.100
+ubuntu24.lab	ansible_host=35.222.126.207
