@@ -6,8 +6,11 @@
     state: absent
 
 - name: Set NTP time source to google's NTP server
-  notify: BounceNTP
   ansible.builtin.lineinfile:
     path: /etc/chrony.conf
     line: 'server  time.google.com  iburst maxpoll 16'
 
+- name: BounceNTP
+  ansible.builtin.service:
+     name: chronyd
+     state: restarted
