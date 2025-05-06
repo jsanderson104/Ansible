@@ -1,6 +1,10 @@
 ---
 # tasks file for kubecluster
 
+- name: Import NTP config
+  when: v_configurentp is true
+  ansible.builtin.import_tasks: configure_ntp.yml
+    
 - name: Import REPO config
   when: v_configurerepos is true
   ansible.builtin.import_tasks: configure_repos.yml

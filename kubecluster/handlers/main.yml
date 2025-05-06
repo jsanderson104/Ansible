@@ -3,3 +3,7 @@
 - name: sysctl_handler
   ansible.builtin.shell: sysctl -p --system
 
+- name: BounceNTP
+  ansible.builtin.service:
+     name: chronyd
+     state: restarted
