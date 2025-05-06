@@ -1,6 +1,10 @@
 ---
 # tasks file for kubecluster
 
+- name: Import HOSTS file config
+  when: v_configurehosts is true
+  ansible.builtin.import_tasks: configure_hosts.yml
+    
 - name: Import NTP config
   when: v_configurentp is true
   ansible.builtin.import_tasks: configure_ntp.yml
