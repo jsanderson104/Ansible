@@ -1,6 +1,6 @@
 ---
 # Main defaults definitions for ansible role kubecluster
-
+ v_configurentp: True
  v_configurerepos : True
  v_installpackages : True
  v_configurefirewalld : True
