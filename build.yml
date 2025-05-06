@@ -1,0 +1,8 @@
+---
+- name: Build a 3-Node Kubernetes cluster with containerd runtime cri.
+  hosts: all
+  become: true
+  gather_facts: true
+  roles:
+    - kubecluster
+

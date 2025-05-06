@@ -1,0 +1,12 @@
+[all]
+control
+worker1
+worker2
+
+
+[master]
+control
+
+[workers]
+worker1
+worker2
