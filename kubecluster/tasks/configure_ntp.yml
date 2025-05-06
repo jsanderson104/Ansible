@@ -2,12 +2,12 @@
 - name: Remove previous server and pool entries.
   ansible.builtin.lineinfile:
     path: /etc/chrony.conf
-    lineinfile: ^pool.*
+    line: ^pool.*
     state: absent
 
 - name: Set NTP time source to google's NTP server
   notify: BounceNTP
   ansible.builtin.lineinfile:
     path: /etc/chrony.conf
-    lineinfile: 'server  time.google.com  iburst maxpoll 16'
+    line: 'server  time.google.com  iburst maxpoll 16'
 
