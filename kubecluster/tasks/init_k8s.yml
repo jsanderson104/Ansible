@@ -8,6 +8,22 @@
     state: restarted
     enabled: true
 
+- name: Configure containerd
+  ansible.builtin.shell: containerd config default > /etc/containerd/config.toml
+  register: config_containerd
+  failed_when: config_containerd.rc == 0
+
+- name: Enable Systemd Cgroups for containerd
+  ansible.builtin.replace:
+     path: /etc/containerd/config.toml
+     regexp: ^\s*SystemdCgroup.*false.*$
+     replace: '            SystemdCgroup = true'
+
+- name: Restart containerd
+  ansible.builtin.service:
+     name: containerd
+     state: restarted
+
 - name: Docker Pull Kube Master images to Control Plane node
   when: " 'control' in inventory_hostname"
   ansible.builtin.shell: kubeadm config images pull
