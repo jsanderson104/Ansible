@@ -1,5 +1,6 @@
 ---
 # Main defaults definitions for ansible role kubecluster
+ control_plane_fqdn: control.k8s.sanderson.com
  v_configurehosts: True
  v_configurentp: True
  v_configurerepos : True
