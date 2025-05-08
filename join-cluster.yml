@@ -1,0 +1,21 @@
+---
+- name: Join Kube cluster
+  hosts: workers
+  become: true
+  gather_facts: false
+  tasks:
+       - name: Ensure that IP-Forwarding is enabled in the kernel.
+         ansible.builtin.shell: echo 1 > /proc/sys/net/ipv4/ip_forward
+
+       - name: Join command
+         ansible.builtin.shell: kubeadm join 192.168.1.76:6443 --token 'mopidv.jclunmfx75l13uqx' --discovery-token-ca-cert-hash "sha256:0017845094a473b2f7aa3d6fb4562ae086fb2ad5e614e9d7efa95f56d2c0ad9a"
+         register: cmd
+
+       - name: Print output of join
+         ansible.builtin.debug:
+           var: cmd
+
+
+# kubeadm token list
+# @ kubeadm token create. creates a new token to join nodes with.. remember this!!
+#mopidv.jclunmfx75l13uqx
