@@ -1,7 +1,6 @@
 ---
 - name: Join command
-  when: "inventory_hostname in groups['workers'] "
-  ansible.builtin.shell: kubeadm join {{control_plane_fqdn}}:6443 --token {{hostvars['control']['token']}} 2>&1|tee /var/log/kube-join.log
+  ansible.builtin.shell:  hostname |grep control || kubeadm join {{control_plane_fqdn}}:6443 --token {{hostvars['control']['token']}} 2>&1|tee /var/log/kube-join.log
   register: cmd
 
 - name: Print output of join
