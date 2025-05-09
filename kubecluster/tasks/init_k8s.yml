@@ -48,6 +48,7 @@
   register: join_node_token
 
 - name: Set Token as Fact
+  when: " 'control' in inventory_hostname"
   ansible.builtin.debug:
      var: join_node_token
 
