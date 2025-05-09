@@ -3,6 +3,8 @@
   hosts: kubecluster
   become: true
   gather_facts: true
+  vars:
+   v_reboot: false
   roles:
     - kubecluster
 
