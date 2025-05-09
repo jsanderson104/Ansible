@@ -44,7 +44,7 @@
 
 - name: Get Token to join workers to control-plane
   when: " 'control' in inventory_hostname"
-  ansible.builtin.shell:  "kubeadm token list |grep -v NEVER |awk '{print $1}' "
+  ansible.builtin.shell:  "kubeadm token list |grep -v TOKEN |awk '{print $1}' "
   register: join_node_token
 
 - name: Set Token as Fact
