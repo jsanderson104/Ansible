@@ -10,4 +10,4 @@
 
 - name: Print output of join
   ansible.builtin.debug:
-     var: cmd
+     var: cmd.stdout
