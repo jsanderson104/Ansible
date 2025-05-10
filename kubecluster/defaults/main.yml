@@ -2,6 +2,7 @@
 # Main defaults definitions for ansible role kubecluster
  pod_net_cidr: 10.10.0.0/16
  service_net_cidr: 10.20.0.0/16
+ service_dns_domain: k8s.sanderson.com
  control_plane_fqdn: control.k8s.sanderson.com
  v_configurehosts: True
  v_configurentp: True

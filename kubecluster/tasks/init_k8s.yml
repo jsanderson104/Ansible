@@ -34,7 +34,7 @@
 
 - name: Kubeadm Initialize POD network
   when: " 'control' in inventory_hostname"
-  ansible.builtin.shell: kubeadm init --pod-network-cidr={{pod_net_cidr}} --service-cidr={{service_net_cidr}}
+  ansible.builtin.shell: kubeadm init --pod-network-cidr={{pod_net_cidr}} --service-cidr={{service_net_cidr}} --service-dns-domain={{service_dns_domain}}
   register: kubeadm_podnetinit
 
 - name: View Results of Initialization of Master
