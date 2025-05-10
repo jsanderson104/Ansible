@@ -13,3 +13,8 @@
     state: enabled
     permanent: true
     port: "{{item}}"
+
+- name: Restart Firewalld service
+  ansible.posix.service:
+    name: firewalld
+    state: restarted
