@@ -15,6 +15,6 @@
     port: "{{item}}"
 
 - name: Restart Firewalld service
-  ansible.posix.service:
+  ansible.builtin.service:
     name: firewalld
     state: restarted
