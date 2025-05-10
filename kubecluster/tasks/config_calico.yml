@@ -1,0 +1,30 @@
+---
+- name: Install and Configure Calico CNI  STEP1
+  ansible.builtin.copy:  
+    src: tigera-opertor.yaml
+    dest: /root/
+
+- name: Install CNI config file STEP1
+  ansible.builtin.shell:  kubectl create -f /root/tigera-operator.yaml
+  register: cni_step1
+
+
+- name: Debug CALICO Step1 
+  ansible.builtin.debug:
+    var: cni_step1
+
+
+- name: Copy Custom CNI config file to master node
+  ansible.builtin.copy:
+    src: custom-cni.yml.j2
+    dest: /root/
+    
+
+- name: Install and Configure Calico CNI  STEP2
+  ansible.builtin.shell:  kubectl create -f /root/custom-cni.yml
+  register: cni_step2
+
+- name: Debug CALICO Step2 
+  ansible.builtin.debug:
+    var: cni_step2
+

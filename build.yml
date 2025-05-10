@@ -6,7 +6,7 @@
   vars:
    v_reboot: false
    pod_net_cidr: 10.10.0.0/16 #default
-   service_net_cidr: 10.20.0.0/16 #default
+   service_net_cidr: 10.10.0.0/16 #default
    service_dns_domain: k8s.sanderson.com #default
 
   roles:

@@ -14,3 +14,4 @@
  v_reboot : True
  v_initk8s : True
  v_joinworkers: True
+ v_configcalico: True

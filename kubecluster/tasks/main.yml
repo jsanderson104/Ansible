@@ -43,3 +43,8 @@
 - name: Import Kube Cluster initialization tasks
   when: v_joinworkers is true
   ansible.builtin.import_tasks: join_worker_node.yml
+
+- name: Import Configure Calico CNI
+  when: v_configcalico is true
+  ansible.builtin.import_tasks: config_calico.yml
+
