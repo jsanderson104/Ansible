@@ -1,10 +1,13 @@
 ---
-- name: Build a 3-Node Kubernetes cluster with containerd runtime cri.
+- name: Build a 4-Node Kubernetes cluster with containerd runtime cri.
   hosts: kubecluster
   become: true
   gather_facts: true
   vars:
    v_reboot: false
+   pod_net_cidr: 10.10.0.0/16 #default
+   service_net_cidr: 10.20.0.0/16 #default
+
   roles:
     - kubecluster
 
