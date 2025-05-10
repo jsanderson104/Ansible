@@ -4,9 +4,10 @@
 
 This 'kubecluster' Ansible role is designed to setup a small VM lab network that I use for testing Kubernetes while I train for the certification.
 But, for all intents and purposes, this Ansible role doesn't care if it's a home vm or a server room - works the same.
+I made this a 4-node cluster with 3-workers because a default Kubernetes replicaset needs 3 workers to be truly protected (or atleast that was my understanding of how replicasets work)
 
 # Key notes about the role:
-# 1. "control.k8s.sanderson.com" is the only kube cluster control plane (eg - cluster mgr). It's specific name is used exclusively in ../tasks/init_k8s.yml
+# 1. "control" is the only kube cluster control plane (eg - cluster mgr). It's specific name is used exclusively in ../tasks/init_k8s.yml
 #     so if you don't want your cluster manager to be named something differently then you'll need to change it in the tasks/*.yml files. It's only 2 or 3 entries.
       or you can fix the code for me and send it to me. ;) 
 
