@@ -40,11 +40,11 @@
   ansible.builtin.import_tasks: init_k8s.yml
 
 - name: Import Kube Cluster initialization tasks
-  ansible.builtin.import_tasks: configure_regular_user.yml
-
-- name: Import Kube Cluster initialization tasks
   when: v_joinworkers is true
   ansible.builtin.import_tasks: join_worker_node.yml
+
+- name: Import automation user kube setup
+  ansible.builtin.import_tasks: configure_regular_user.yml
 
 - name: Import Configure Calico CNI
   when: v_configcalico is true
