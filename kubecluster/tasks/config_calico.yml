@@ -1,6 +1,6 @@
 ---
 - name: Install and Configure Calico CNI  STEP1
-  become:false
+  become: false
   ansible.builtin.copy:  
     src: tigera-operator.yaml
     dest: /tmp/
