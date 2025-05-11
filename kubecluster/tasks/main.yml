@@ -39,6 +39,8 @@
   when: v_initk8s is true
   ansible.builtin.import_tasks: init_k8s.yml
 
+- name: Import Kube Cluster initialization tasks
+  ansible.builtin.import_tasks: configure_regular_user.yml
 
 - name: Import Kube Cluster initialization tasks
   when: v_joinworkers is true
