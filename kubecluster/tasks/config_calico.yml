@@ -7,7 +7,7 @@
 
 - name: Install CNI config file STEP1
   become: false
-  ansible.builtin.shell:  kubectl create -f /root/tigera-operator.yaml
+  ansible.builtin.shell:  kubectl create -f /tmp/tigera-operator.yaml
   register: cni_step1
 
 
