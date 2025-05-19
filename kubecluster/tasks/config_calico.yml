@@ -25,7 +25,7 @@
 
 - name: Install and Configure Calico CNI  STEP2
   become: false
-  ansible.builtin.shell: kubectl create -f /tmp/custom-cni.yml
+  ansible.builtin.shell: kubectl create -f /tmp/custom-cni.yml --validate=false
   register: cni_step2
 
 - name: Debug CALICO Step2 
