@@ -50,3 +50,7 @@
   when: v_configcalico is true
   ansible.builtin.import_tasks: config_calico.yml
 
+- name: Import Configure Kubernetes Dashboard
+  when: v_configdashboard is true
+  ansible.builtin.import_tasks: deploy_kube_dashboard.yml
+

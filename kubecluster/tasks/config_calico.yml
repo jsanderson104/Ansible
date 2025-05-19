@@ -19,8 +19,8 @@
 - name: Copy Custom CNI config file to master node
   become: false
   ansible.builtin.template:
-    src: custom-cni.yml
-    dest: /tmp/
+    src: custom-cni.yml.j2
+    dest: /tmp/custom-cni.yml
     
 
 - name: Install and Configure Calico CNI  STEP2

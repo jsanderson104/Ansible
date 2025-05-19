@@ -1,0 +1,124 @@
+---
+
+# How to install helm
+# https://helm.sh/docs/intro/install/
+
+# Helm requires Go version newer than RHEL9 repos offer so we get it from the interwebs :)
+# https://go.dev/doc/install
+#
+
+# Installing the Dashboard HOWTO
+# https://spacelift.io/blog/kubernetes-dashboard#how-to-install-kubernetes-dashboard
+
+# Creating the Kubernetes Service Account and Role for the dashboard: https://medium.com/@achanandhi.m/creating-a-serviceaccount-with-clusterrole-and-clusterrolebinding-in-kubernetes-af8b5f34ac51
+#
+
+- name: Download GO interpereter
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.unarchive:
+    src: https://go.dev/dl/go1.24.3.src.tar.gz
+    dest: /usr/local/
+    owner: automation
+    group: automation
+    mode: 0755
+
+- name: Download latest HELM source code from GITHUB
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.shell: cd /usr/local/ && git clone https://github.com/helm/helm.git && chown -Rf automation:automation helm
+
+- name: Build helm from source
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.shell: export PATH=$PATH:/usr/local/go/bin/ && cd /usr/local/helm/ && make && make install
+  register: build_helm
+
+- name: DEBUG | Build Helm Output
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.debug:
+    var: build_helm
+
+- name: Use Helm to install Kubernetes Dashboard repo
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.shell: helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+  register: helm_add_repo
+
+- name: DEBUG | Helm Add Kube Dashboard repo
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.debug:
+    var: helm_add_repo
+
+- name: Deploy Dashboard
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.shell: helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+  register: deploy_dashboard
+
+
+- name: DEBUG | Deploy Dashboard
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.debug:
+    var: deploy_dashboard
+
+- name: Copy ClusterRole file
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.copy:
+    src: dashboard-user.yml
+    dest: /home/automation/
+    owner: automation
+    group: automation
+    mode: 0644
+
+- name: Deploy ClusterRole file in Kubernetes
+  when: " inventory_hostname in groups['master'] "
+  become: false
+  ansible.builtin.shell: kubectl apply -f /home/automation/dashboard-user.yml
+  register: deploy_clusterrole
+
+- name: DEBUG | Deploy ClusterRole in Kubernetes
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.debug:
+    var: deploy_clusterrole
+
+- name: Create Kubernetes Service Account volume-token
+  when: " inventory_hostname in groups['master'] "
+  become: false
+  ansible.builtin.shell: kubectl create sa volume-token
+  register: satoken
+
+- name: DEBUG | Deploy ClusterRole in Kubernetes
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.debug:
+    var: satoken
+
+
+- name: Copy ClusterRoleBinding file
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.copy:
+    src: ServiceAccount_ClusterRoleBinding.yml
+    dest: /home/automation/
+    owner: automation
+    group: automation
+    mode: 0644
+
+- name: Deploy ClusterRole file in Kubernetes
+  when: " inventory_hostname in groups['master'] "
+  become: false
+  ansible.builtin.shell: kubectl apply -f /home/automation/ServiceAccount_ClusterRoleBinding.yml
+  register: deploy_clusterrolebinding
+
+- name: DEBUG | Deploy ClusterRole in Kubernetes
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.debug:
+    var: deploy_clusterrolebinding
+
+
+- name: Retrieve LOGIN TOKEN for dashboard-user
+  when: " inventory_hostname in groups['master'] "
+  become: false
+  ansible.builtin.shell: 'kubectl get secret $(kubectl get serviceaccount dashboard-user -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode '
+  register: dashboard_login_token
+
+
+- name: DEBUG | Dashboard login token
+  when: " inventory_hostname in groups['master'] "
+  ansible.builtin.debug:
+    var: dashboard_login_token
+

@@ -15,3 +15,4 @@
  v_initk8s : True
  v_joinworkers: True
  v_configcalico: True
+ v_configdashboard: True
