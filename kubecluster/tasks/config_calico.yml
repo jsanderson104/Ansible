@@ -19,7 +19,7 @@
 - name: Copy Custom CNI config file to master node
   become: false
   ansible.builtin.template:
-    src: custom-cni.yml.j2
+    src: custom-cni.yml
     dest: /tmp/
     
 
