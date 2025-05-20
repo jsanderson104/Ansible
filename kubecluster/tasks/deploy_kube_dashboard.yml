@@ -46,6 +46,7 @@
     var: build_helm
 
 - name: Use Helm to install Kubernetes Dashboard repo
+  become: false
   when: " inventory_hostname in groups['master'] "
   ansible.builtin.shell: /usr/local/helm/bin/helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
   register: helm_add_repo
