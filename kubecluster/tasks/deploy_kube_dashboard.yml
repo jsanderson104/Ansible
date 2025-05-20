@@ -37,7 +37,7 @@
 
 - name: Build helm from source
   when: " inventory_hostname in groups['master'] "
-  ansible.builtin.shell: export PATH=$PATH:/usr/local/go/bin/ && cd /usr/local/helm/ && make && make install
+  ansible.builtin.shell: export PATH=$PATH:/usr/local/go/bin/ && cd /usr/local/helm/ && make && make install && chown -R automation:automation /usr/local/helm
   register: build_helm
 
 - name: DEBUG | Build Helm Output
