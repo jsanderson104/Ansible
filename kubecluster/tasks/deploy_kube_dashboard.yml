@@ -47,7 +47,7 @@
 
 - name: Use Helm to install Kubernetes Dashboard repo
   when: " inventory_hostname in groups['master'] "
-  ansible.builtin.shell: helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+  ansible.builtin.shell: /usr/local/helm/bin/helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
   register: helm_add_repo
 
 - name: DEBUG | Helm Add Kube Dashboard repo
@@ -57,7 +57,7 @@
 
 - name: Deploy Dashboard
   when: " inventory_hostname in groups['master'] "
-  ansible.builtin.shell: helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+  ansible.builtin.shell: /usr/local/helm/bin/helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
   register: deploy_dashboard
 
 
