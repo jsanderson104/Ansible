@@ -13,10 +13,18 @@
 # Creating the Kubernetes Service Account and Role for the dashboard: https://medium.com/@achanandhi.m/creating-a-serviceaccount-with-clusterrole-and-clusterrolebinding-in-kubernetes-af8b5f34ac51
 #
 
-- name: Download GO interpereter
+- name: Download GO interpreter
+  ansible.builtin.uri:
+    url: https://go.dev/dl/go1.24.3.src.tar.gz
+    dest: /home/automation/
+    owner: automation
+    group: automation
+    mode: 0644
+
+- name: Extract GO interpereter
   when: " inventory_hostname in groups['master'] "
   ansible.builtin.unarchive:
-    src: https://go.dev/dl/go1.24.3.src.tar.gz
+    src: /home/automation/go1.24.3.src.tar.gz
     dest: /usr/local/
     owner: automation
     group: automation
