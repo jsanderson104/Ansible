@@ -15,7 +15,7 @@
 
 - name: Download GO interpreter
   ansible.builtin.uri:
-    url: https://go.dev/dl/go1.24.3.src.tar.gz
+    url: https://go.dev/dl/go1.24.3.linux-amd64.tar.gz
     dest: /home/automation/
     owner: automation
     group: automation
@@ -24,7 +24,7 @@
 - name: Extract GO interpereter
   when: " inventory_hostname in groups['master'] "
   ansible.builtin.unarchive:
-    src: /home/automation/go1.24.3.src.tar.gz
+    src: /home/automation/go1.24.3.linux-amd64.tar.gz
     dest: /usr/local/
     owner: automation
     group: automation
