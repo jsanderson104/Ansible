@@ -15,20 +15,19 @@
   ansible.builtin.debug:
     var: cni_step1
 
-
+ # We use a template for this task because we want to be able to define a var that has our POD_NETWORK_CIDR. Default: 10.10.0.0 subnet 16bits
 - name: Copy Custom CNI config file to master node
   become: false
   ansible.builtin.template:
-    src: custom-cni.yml.j2
-    dest: /tmp/custom-cni.yml
+    src: custom-cni.yml
+    dest: /home/automation/custom-cni.yml
     
 
 - name: Install and Configure Calico CNI  STEP2
   become: false
-  ansible.builtin.shell: kubectl create -f /tmp/custom-cni.yml --validate=false
+  ansible.builtin.shell: kubectl create -f /home/automation/custom-cni.yml --validate=false
   register: cni_step2
 
 - name: Debug CALICO Step2 
   ansible.builtin.debug:
     var: cni_step2
-
