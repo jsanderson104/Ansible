@@ -7,3 +7,13 @@
 - name: Print output of join
   ansible.builtin.debug:
      var: cmd.stdout
+
+- name: Set worker node to type "worker"
+  ansible.builtin.shell: kubectl label node {{inventory_hostname}}  node-role.kubernetes.io/worker=worker
+  register: set_worker_type
+
+- name: DEBUG | Changing nodes to worker type
+  ansible.builtin.debug:
+    var: set_worker_type
+
+
