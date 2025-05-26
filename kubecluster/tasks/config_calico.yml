@@ -1,22 +1,26 @@
 ---
 - name: Install and Configure Calico CNI  STEP1
+  when: " inventory_hostname in groups['master'] "
   become: false
   ansible.builtin.copy:  
     src: tigera-operator.yaml
     dest: /tmp/
 
 - name: Install CNI config file STEP1
+  when: " inventory_hostname in groups['master'] "
   become: false
   ansible.builtin.shell:  kubectl create -f /tmp/tigera-operator.yaml
   register: cni_step1
 
 
 - name: Debug CALICO Step1 
+  when: " inventory_hostname in groups['master'] "
   ansible.builtin.debug:
     var: cni_step1
 
  # We use a template for this task because we want to be able to define a var that has our POD_NETWORK_CIDR. Default: 10.10.0.0 subnet 16bits
 - name: Copy Custom CNI config file to master node
+  when: " inventory_hostname in groups['master'] "
   become: false
   ansible.builtin.template:
     src: custom-cni.yml
@@ -25,11 +29,13 @@
 
 ### THIS ALWAYS FAILS BUT RUNS PERFECTLY ON BASH TERMINAL AS automation user... wth
 - name: Install and Configure Calico CNI  STEP2
+  when: " inventory_hostname in groups['master'] "
   ignore_errors: true
   become: false
   ansible.builtin.shell: kubectl create -f /home/automation/custom-cni.yml --validate=false
   register: cni_step2
 
 - name: Debug CALICO Step2 
+  when: " inventory_hostname in groups['master'] "
   ansible.builtin.debug:
     var: cni_step2
