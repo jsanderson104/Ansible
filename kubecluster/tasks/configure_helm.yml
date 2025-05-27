@@ -1,0 +1,48 @@
+---
+
+  3 # How to install helm
+  4 # https://helm.sh/docs/intro/install/
+  5
+  6 # Helm requires Go version newer than RHEL9 repos offer so we get it from the interwebs :)
+  7 # https://go.dev/doc/install
+  8 #
+  9
+ 10 # Installing the Dashboard HOWTO
+ 11 # https://spacelift.io/blog/kubernetes-dashboard#how-to-install-kubernetes-dashboard
+ 12
+ 13 # Creating the Kubernetes Service Account and Role for the dashboard: https://medium.com/@achanandhi.m/creating-a-serviceaccount-with-clusterro    le-and-clusterrolebinding-in-kubernetes-af8b5f34ac51
+ 14 #
+ 15
+ 16 - name: Download GO interpreter
+ 17   ansible.builtin.uri:
+ 18     url: https://go.dev/dl/go1.24.3.linux-amd64.tar.gz
+ 19     dest: /home/automation/
+ 20     owner: automation
+ 21     group: automation
+ 22     mode: 0644
+ 23
+ 24 - name: Extract GO interpereter
+ 25   when: " inventory_hostname in groups['master'] "
+ 26   ansible.builtin.unarchive:
+ 27     src: /home/automation/go1.24.3.linux-amd64.tar.gz
+ 28     dest: /usr/local/
+ 29     owner: automation
+ 30     group: automation
+ 31     mode: 0755
+ 32     remote_src: true
+ 33
+ 34 - name: Download latest HELM source code from GITHUB
+ 35   when: " inventory_hostname in groups['master'] "
+ 36   ansible.builtin.shell: cd /usr/local/ && git clone https://github.com/helm/helm.git && chown -Rf automation:automation helm
+ 37
+ 38 - name: Build helm from source
+ 39   when: " inventory_hostname in groups['master'] "
+ 40   ansible.builtin.shell: export PATH=$PATH:/usr/local/go/bin/ && cd /usr/local/helm/ && make && make install && chown -R automation:automation     /usr/local/helm
+ 41   register: build_helm
+ 42
+ 43 - name: DEBUG | Build Helm Output
+ 44   when: " inventory_hostname in groups['master'] "
+ 45   ansible.builtin.debug:
+ 46     var: build_helm
+ 47
+

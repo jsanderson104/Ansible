@@ -50,6 +50,14 @@
   when: v_configcalico is true
   ansible.builtin.import_tasks: config_calico.yml
 
+- name: Import Configure HELM for Kubernetes
+  when: v_configurehelm is true
+  ansible.builtin.import_tasks: configure_helm.yml
+
+- name: Import Setup NGinx Ingress Controller
+  when: v_configure_nginx_ingress is true
+  ansible.builtin.import_tasks: configure_nginx-ingress-controller.yml
+
 - name: Import Configure Kubernetes Dashboard
   when: v_configdashboard is true
   ansible.builtin.import_tasks: deploy_kube_dashboard.yml

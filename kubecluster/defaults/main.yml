@@ -15,4 +15,6 @@
  v_initk8s : True
  v_joinworkers: True
  v_configcalico: True
+ v_configure_helm: true
+ v_configure_nginx_ingress: true
  v_configdashboard: False
