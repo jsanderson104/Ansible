@@ -1,5 +1,5 @@
 ---
-- name: Add ports to Firewall
+- name: PREPARE | Add ports to Firewall
   loop:
      - 6443/tcp
      - 2379/tcp
@@ -14,7 +14,7 @@
     permanent: true
     port: "{{item}}"
 
-- name: Restart Firewalld service
+- name: PREPARE | Restart Firewalld service
   ansible.builtin.service:
     name: firewalld
     state: restarted

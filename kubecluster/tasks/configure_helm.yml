@@ -1,5 +1,6 @@
 ---
-- name: Download GO interpreter
+- name: BUILD K8S | Download GO interpreter
+  when: " inventory_hostname in groups['master'] "
   ansible.builtin.uri:
     url: https://go.dev/dl/go1.24.3.linux-amd64.tar.gz
     dest: /home/automation/
@@ -7,7 +8,7 @@
     group: automation
     mode: 0644
 
-- name: Extract GO interpereter
+- name: BUILD K8S | Extract GO interpereter
   when: " inventory_hostname in groups['master'] "
   ansible.builtin.unarchive:
     src: /home/automation/go1.24.3.linux-amd64.tar.gz
@@ -17,11 +18,11 @@
     mode: 0755
     remote_src: true
 
-- name: Download latest HELM source code from GITHUB
+- name: BUILD K8S | Download latest HELM source code from GITHUB
   when: " inventory_hostname in groups['master'] "
   ansible.builtin.shell: cd /usr/local/ && git clone https://github.com/helm/helm.git && chown -Rf automation:automation helm
 
-- name: Build helm from source
+- name: BUILD K8S | Build helm from source
   when: " inventory_hostname in groups['master'] "
   ansible.builtin.shell: export PATH=$PATH:/usr/local/go/bin/ && cd /usr/local/helm/ && make && make install && chown -R automation:automation     /usr/local/helm
   register: build_helm

@@ -1,5 +1,5 @@
 ---
-- name: Create Kubernetes Repo file
+- name: PREPARE |  Create Kubernetes DNF Repository
   ansible.builtin.copy:
     dest: /etc/yum.repos.d/kubernetes.repo
     content: |
@@ -10,7 +10,7 @@
              gpgcheck=1
              gpgkey=https://pkgs.k8s.io/core:/stable:/v1.32/rpm/repodata/repomd.xml.key
 
-- name: Create Docker-CE Repo file
+- name: PREPARE |  Create Docker-CE DNF Repository
   ansible.builtin.uri:
     url:  https://download.docker.com/linux/centos/docker-ce.repo
     dest: /etc/yum.repos.d/
@@ -18,10 +18,10 @@
     group: root
     mode: 0644
 
-- name: Disable SSL verification because I'm lazy and dont care.
+- name: PREPARE |  Disable SSL verification on DNF Repos
   ansible.builtin.lineinfile:
     path: /etc/yum.conf
     line: sslverify=0
 
-- name: DNF Cache refresh
+- name: PREPARE | DNF Cache refresh
   ansible.builtin.shell: yum clean all && yum makecache

@@ -9,7 +9,7 @@ spec:
   calicoNetwork:
     ipPools:
     - name: default-ipv4-ippool
-      blockSize: 24
+      blockSize: {{cidr_block_size}}
       cidr: {{pod_net_cidr}}
       encapsulation: VXLANCrossSubnet
       natOutgoing: Enabled

@@ -1,5 +1,5 @@
 ---
-- name: Install Packages
+- name: PREPARE | Install needed packages
   loop:
     - kubernetes-cni
     - containerd.io

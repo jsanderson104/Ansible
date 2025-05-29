@@ -1,6 +1,10 @@
 ---
 # tasks file for kubecluster
-
+#
+- name: Import Hostname reset
+  when: v_reset_hostnames is true
+  ansible.builtin.import_tasks: reset_hostnames.yml
+    
 - name: Import HOSTS file config
   when: v_configurehosts is true
   ansible.builtin.import_tasks: configure_hosts.yml
@@ -58,7 +62,7 @@
   when: v_configure_nginx_ingress is true
   ansible.builtin.import_tasks: configure_nginx-ingress-controller.yml
 
-- name: Import Configure Kubernetes Dashboard
-  when: v_configdashboard is true
-  ansible.builtin.import_tasks: deploy_kube_dashboard.yml
-
+#- name: Import Configure Kubernetes Dashboard
+#  when: v_configdashboard is true
+#  ansible.builtin.import_tasks: deploy_kube_dashboard.yml
+#

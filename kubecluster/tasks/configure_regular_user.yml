@@ -1,14 +1,14 @@
 ---
-- name: Configure automation user to be able to access kubectl
+- name: BUILD K8S | Configure automation user to be able to access kubectl
   when: "  inventory_hostname in groups['master'] "
   ansible.builtin.file:
     name: /home/automation/.kube
     state: directory
     owner: automation
     group: automation
-    mode: 0755
+    mode: 0750
 
-- name: Configure automation user to be able to access kubectl
+- name: BUILD K8S | Configure automation user to be able to access kubectl
   when: "  inventory_hostname in groups['master'] "
   ansible.builtin.copy:
     src: /etc/kubernetes/admin.conf
@@ -16,21 +16,18 @@
     remote_src: true
     owner: automation
     group: automation
-    mode: 0755
+    mode: 0640
 
-- name: Add to bashrc file
+- name: BUILD K8S | Add to bashrc file
   when: "  inventory_hostname in groups['master'] "
   ansible.builtin.lineinfile:
     path: /home/automation/.bashrc
     line: export KUBECONFIG=/home/automation/.kube/config
     owner: automation
     group: automation
-    mode: 0755
+    mode: 0750
 
-
-- name: Apply bashrc changes
+- name: BUILD K8S | Apply bashrc changes
   when: "  inventory_hostname in groups['master'] "
   ansible.builtin.shell: source /home/automation/.bashrc
-
-
 

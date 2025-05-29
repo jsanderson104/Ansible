@@ -1,4 +1,4 @@
 ---
-- name: Disable SWAP
+- name: PREPARE |  Disable SWAP
   ansible.builtin.shell: swapoff -a && sed -ie '/swap/s/^/#/g' /etc/fstab
 

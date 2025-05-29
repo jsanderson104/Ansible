@@ -1,16 +1,16 @@
 ---
-- name: Remove previous server and pool entries.
+- name: NTP | Remove previous server and pool entries.
   ansible.builtin.lineinfile:
     path: /etc/chrony.conf
     line: ^pool.*
     state: absent
 
-- name: Set NTP time source to google's NTP server
+- name: NTP | Set time source to google
   ansible.builtin.lineinfile:
     path: /etc/chrony.conf
     line: 'server  time.google.com  iburst maxpoll 16'
 
-- name: BounceNTP
+- name: NTP | Restart Chrony
   ansible.builtin.service:
      name: chronyd
      state: restarted
