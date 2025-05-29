@@ -3,6 +3,7 @@
 
 # How to use:
   - Need 4 VM's on RHEL9. (1 Master, and 3 Workers)
+  - /var partition on master node needs to have at least 50G or the initial kube master image pulls will fail and the cluster will fail to install.
   - Do NOT use this role over-and-over" and expect it to be a solid cluster. If it messes, revert your snapshots on all of them and start over.
      - You don't need a hosts file. I do that.
      - I set the hostname FQDN of all nodes based on inventory names and a var called 'service_dns_domain'.
