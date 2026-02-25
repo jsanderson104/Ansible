@@ -1,5 +1,5 @@
-# Designed for RHEL9.
-# This repository is for public consumption but at your own risk.
+Use Ansible to install a Kubernetes cluster
+
 
 # How to use:
   - Need 4 VM's on RHEL9. (1 Master, and 3 Workers)
